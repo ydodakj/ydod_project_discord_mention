@@ -40,6 +40,13 @@ class ProjectTask(models.Model):
 
         return res
 
+    def message_post(self, **kwargs):
+        msg = super().message_post(**kwargs)
+        note_subtype = self.env.ref('mail.mt_note', raise_if_not_found=False)
+        if note_subtype and msg.subtype_id == note_subtype:
+            self._send_discord_log_note()
+        return msg
+
     def action_send_discord(self):
         """Manual trigger dari button di header form task."""
         for task in self:
@@ -94,6 +101,27 @@ class ProjectTask(models.Model):
             f'📅 Deadline: **{deadline_str}**\n'
             f'⚡ Prioritas: {priority_str}\n'
             f'🕐 Waktu: **{self._now_str()}**\n\n'
+            f'🔗 {task_url}'
+        )
+        self._post_to_discord(webhook_url, content)
+
+    def _send_discord_log_note(self):
+        webhook_url = self._get_discord_webhook()
+        if not webhook_url:
+            return
+
+        mention_str = self._get_mention_str()
+        project_name = self.project_id.name if self.project_id else '-'
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url', '')
+        task_url = f'{base_url}/odoo/all-tasks/{self.id}'
+
+        content = (
+            f'📌 **Log Note baru telah ditambahkan**\n'
+            f'📣 Mohon cek Log Note terbaru pada task tersebut.\n\n'
+            f'👤 Assigned to: {mention_str}\n'
+            f'📝 Task: **{self.name}**\n'
+            f'📁 Project: **{project_name}**\n'
+            f'🕐 Waktu: {self._now_str()}\n\n'
             f'🔗 {task_url}'
         )
         self._post_to_discord(webhook_url, content)
