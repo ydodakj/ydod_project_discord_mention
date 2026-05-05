@@ -288,6 +288,66 @@
     }
     .demo-box .demo-caption i { color: var(--accent); }
 
+    /* ── CODE BLOCK ── */
+    .code-block {
+      background: #1e1e2e;
+      border-radius: 8px;
+      padding: 0.85rem 1.1rem;
+      margin: 0.55rem 0 0.6rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      color: #cdd6f4;
+      overflow-x: auto;
+      border: 1px solid #313244;
+      line-height: 1.7;
+    }
+
+    /* ── ALERT BOX ── */
+    .alert-box {
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin: 0.55rem 0 0.3rem;
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      font-size: 0.85rem; line-height: 1.55;
+    }
+    .alert-info    { background: #e8f4f8; border-left: 4px solid var(--accent); color: #1a5c61; }
+    .alert-warning { background: #fff8e1; border-left: 4px solid #f59e0b; color: #92400e; }
+    .alert-danger  { background: #fee2e2; border-left: 4px solid #ef4444; color: #991b1b; }
+    .alert-box > i { margin-top: 0.15rem; flex-shrink: 0; }
+
+    /* ── TROUBLESHOOTING TABLE ── */
+    .trouble-table {
+      width: 100%; border-collapse: collapse;
+      background: var(--white); border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden;
+      margin-bottom: 2.5rem;
+    }
+    .trouble-table thead tr { background: linear-gradient(135deg, #2d3748, #1a202c); }
+    .trouble-table thead th {
+      color: var(--white); padding: 0.75rem 1rem;
+      font-size: 0.88rem; text-align: left; font-weight: 600;
+    }
+    .trouble-table tbody tr { border-bottom: 1px solid #f0f0f0; }
+    .trouble-table tbody tr:last-child { border-bottom: none; }
+    .trouble-table tbody tr:hover { background: var(--bg-light); }
+    .trouble-table td { padding: 0.75rem 1rem; font-size: 0.875rem; vertical-align: top; }
+    .trouble-table td:first-child { color: #dc2626; font-weight: 500; }
+
+    /* ── SECURITY LIST ── */
+    .security-list {
+      background: var(--white); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 1.2rem 1.4rem;
+      margin-bottom: 2.5rem; border: 1px solid #eee;
+    }
+    .security-item {
+      display: flex; gap: 0.75rem; align-items: flex-start;
+      padding: 0.65rem 0; border-bottom: 1px solid #f5f5f5;
+      font-size: 0.875rem; line-height: 1.55;
+    }
+    .security-item:last-child { border-bottom: none; }
+    .security-item .sec-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .security-item strong { color: var(--primary); }
+
     /* ── SUPPORT / FOOTER BANNER ── */
     .support-banner {
       background: var(--white); border-radius: var(--radius);
@@ -372,10 +432,56 @@
       </div>
     </div>
 
-    <!-- CARA KERJA -->
+    <!-- INSTALASI -->
     <div class="section-title">
-      <h2><i class="fas fa-cogs"></i> Cara Kerja</h2>
-      <p>Tiga langkah konfigurasi, langsung aktif</p>
+      <h2><i class="fas fa-download"></i> Instalasi</h2>
+      <p>Empat langkah untuk mengaktifkan modul di server Odoo Anda</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Copy Modul ke Direktori Addons</h4>
+          <p>Copy folder modul ke direktori <code>custom-addons</code> Odoo:</p>
+          <div class="code-block">cp -r ydod_project_discord_mention/ /odoo/custom-addons/</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Tambahkan Path ke <code>odoo.conf</code></h4>
+          <p>Daftarkan path addons custom di file konfigurasi Odoo:</p>
+          <div class="code-block">[options]<br/>addons_path = /odoo/addons,/odoo/custom-addons</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Restart Service Odoo</h4>
+          <p>Restart agar Odoo mendeteksi modul baru:</p>
+          <div class="code-block">sudo systemctl restart odoo</div>
+          <p style="margin-top:0.4rem;font-size:0.87rem;color:var(--text-light)">Atau update langsung via CLI tanpa restart penuh:</p>
+          <div class="code-block">python odoo-bin -c odoo.conf -u ydod_project_discord_mention --stop-after-init</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Install dari Menu Apps Odoo</h4>
+          <p>Masuk ke <strong>Apps → Filter "Not Installed" → cari "Discord Mention" → klik Install</strong>.</p>
+          <div class="alert-box alert-info">
+            <i class="fas fa-info-circle"></i>
+            <span>Jika modul tidak muncul, aktifkan <strong>Developer Mode</strong> terlebih dahulu via <em>Settings → Activate Developer Mode</em>, lalu klik <strong>Update Apps List</strong>.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KONFIGURASI -->
+    <div class="section-title">
+      <h2><i class="fas fa-cogs"></i> Konfigurasi</h2>
+      <p>Tiga langkah konfigurasi setelah modul berhasil diinstall</p>
     </div>
 
     <div class="steps">
@@ -383,28 +489,61 @@
         <div class="step-num">1</div>
         <div class="step-body">
           <h4>Buat Discord Webhook</h4>
-          <p>Di Discord: <strong>Edit Channel → Integrations → Webhooks → New Webhook</strong>. Copy URL-nya.</p>
+          <p>Buka Discord Server → channel yang akan menerima notifikasi, lalu:</p>
+          <p style="margin-top:0.4rem"><strong>Edit Channel → Integrations → Webhooks → New Webhook</strong></p>
+          <p style="margin-top:0.35rem;font-size:0.87rem;color:var(--text-light)">Beri nama webhook (mis. <em>Odoo Notif</em>), pilih channel tujuan, lalu klik <strong>Copy Webhook URL</strong>.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-body">
-          <h4>Simpan Webhook di Odoo</h4>
-          <p>Masuk ke <strong>Settings → Technical → System Parameters</strong>, tambah key <code>discord.webhook.url</code> dengan nilai webhook URL.</p>
+          <h4>Simpan Webhook URL di Odoo</h4>
+          <p>Masuk ke <strong>Settings → Technical → Parameters → System Parameters</strong></p>
+          <p style="margin-top:0.35rem;font-size:0.87rem">Tambahkan atau edit entri berikut:</p>
+          <div class="code-block">Key&nbsp;&nbsp;: discord.webhook.url<br/>Value : https://discord.com/api/webhooks/&lt;id&gt;/&lt;token&gt;</div>
+          <div class="alert-box alert-warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span><strong>Jangan hardcode</strong> Webhook URL di kode Python. System Parameter hanya bisa diakses oleh Administrator.</span>
+          </div>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-body">
-          <h4>Isi Discord Username di Profil User</h4>
-          <p>Buka <strong>Settings → Users → pilih user → tab Discord</strong>, isi field <em>Discord Username</em> (contoh: <code>budisantoso</code> atau <code>budi#1234</code>).</p>
+          <h4>Isi Discord User ID di Profil Setiap User</h4>
+          <p>Masuk ke <strong>Settings → Users &amp; Companies → Users</strong> → pilih user → tab <strong>Discord</strong> → isi field <em>Discord User ID</em>.</p>
+          <p style="margin-top:0.6rem;font-size:0.9rem;font-weight:600">Cara mendapatkan Discord User ID:</p>
+          <div class="steps" style="margin-top:0.4rem;margin-bottom:0">
+            <div class="step" style="margin-bottom:0.5rem">
+              <div class="step-num" style="min-width:26px;height:26px;font-size:0.78rem">a</div>
+              <div class="step-body">
+                <p style="font-size:0.86rem">Buka Discord → <strong>User Settings → Advanced → aktifkan Developer Mode</strong></p>
+              </div>
+            </div>
+            <div class="step" style="margin-bottom:0.5rem">
+              <div class="step-num" style="min-width:26px;height:26px;font-size:0.78rem">b</div>
+              <div class="step-body">
+                <p style="font-size:0.86rem">Klik kanan nama user di server → <strong>Copy User ID</strong></p>
+              </div>
+            </div>
+            <div class="step" style="margin-bottom:0">
+              <div class="step-num" style="min-width:26px;height:26px;font-size:0.78rem">c</div>
+              <div class="step-body">
+                <p style="font-size:0.86rem">Paste angka tersebut ke field <em>Discord User ID</em> di profil user Odoo</p>
+              </div>
+            </div>
+          </div>
+          <div class="alert-box alert-info" style="margin-top:0.6rem">
+            <i class="fas fa-info-circle"></i>
+            <span>Discord User ID bersifat <strong>numerik</strong> (contoh: <code>123456789012345678</code>). Pastikan tidak ada spasi atau karakter lain.</span>
+          </div>
         </div>
       </div>
       <div class="step">
         <div class="step-num"><i class="fas fa-check"></i></div>
         <div class="step-body">
-          <h4>Selesai — Assign task dan lihat mention muncul di Discord!</h4>
-          <p>Setiap kali field <code>user_ids</code> pada task diubah, webhook otomatis dipanggil.</p>
+          <h4>Selesai — Assign task dan lihat mention langsung di Discord!</h4>
+          <p style="font-size:0.87rem;color:var(--text-light)">Setiap kali field <code>user_ids</code> pada task dibuat atau diubah, webhook otomatis dipanggil tanpa perlu cron job.</p>
         </div>
       </div>
     </div>
@@ -433,7 +572,7 @@
           <img src="sc_discord_user_id.png" alt="Discord User ID pada profil user"/>
           <div class="gallery-caption">
             <i class="fas fa-id-card"></i>
-            Tab Discord pada halaman User — isi Discord User ID
+            Tab Discord pada halaman User — isi <strong>Discord User ID</strong> (numerik)
           </div>
         </div>
         <div class="gallery-item">
@@ -520,13 +659,91 @@
         </thead>
         <tbody>
           <tr>
-            <td>discord_username</td>
+            <td>discord_user_id</td>
             <td>Char</td>
-            <td>Username Discord user, contoh: <code>budisantoso</code> atau <code>budi#1234</code>.</td>
+            <td>ID numerik akun Discord user. Aktifkan <strong>Developer Mode</strong> di Discord lalu klik kanan nama user → <em>Copy User ID</em>. Contoh: <code>123456789012345678</code>.</td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <!-- KEAMANAN -->
+    <div class="section-title">
+      <h2><i class="fas fa-shield-alt"></i> Keamanan &amp; Catatan Penting</h2>
+      <p>Hal-hal yang perlu diperhatikan saat mengoperasikan modul ini</p>
+    </div>
+
+    <div class="security-list">
+      <div class="security-item">
+        <span class="sec-icon">🔐</span>
+        <p><strong>Webhook URL aman di System Parameter</strong> — hanya user dengan akses Administrator yang dapat melihat atau mengubah nilai <code>discord.webhook.url</code>.</p>
+      </div>
+      <div class="security-item">
+        <span class="sec-icon">⚠️</span>
+        <p><strong>Jangan hardcode Webhook URL</strong> di kode Python. Jika URL bocor, siapapun bisa mengirim pesan ke channel Discord Anda. Selalu gunakan System Parameters.</p>
+      </div>
+      <div class="security-item">
+        <span class="sec-icon">📌</span>
+        <p><strong>Discord User ID bersifat numerik</strong> — pastikan tidak salah salin. ID yang salah menyebabkan mention tidak sampai ke user yang dituju.</p>
+      </div>
+      <div class="security-item">
+        <span class="sec-icon">🚫</span>
+        <p><strong>User tanpa Discord ID tetap menerima notifikasi</strong> — pesan tetap terkirim ke Discord namun tanpa mention. User tersebut tidak akan mendapat ping notifikasi.</p>
+      </div>
+      <div class="security-item">
+        <span class="sec-icon">🔁</span>
+        <p><strong>Notifikasi dikirim setiap perubahan <code>user_ids</code></strong> — termasuk saat re-assign atau menambah assignee baru ke task yang sudah ada.</p>
+      </div>
+      <div class="security-item">
+        <span class="sec-icon">📋</span>
+        <p><strong>Log tersedia di Odoo</strong> — semua notifikasi sukses maupun gagal dicatat di <code>/var/log/odoo/odoo.log</code> dengan prefix logger <code>ydod_project_discord_mention</code>.</p>
+      </div>
+    </div>
+
+    <!-- TROUBLESHOOTING -->
+    <div class="section-title">
+      <h2><i class="fas fa-bug"></i> Troubleshooting</h2>
+      <p>Solusi untuk masalah yang paling sering ditemui</p>
+    </div>
+
+    <table class="trouble-table">
+      <thead>
+        <tr>
+          <th><i class="fas fa-exclamation-circle" style="margin-right:0.4rem"></i>Masalah</th>
+          <th><i class="fas fa-wrench" style="margin-right:0.4rem"></i>Solusi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Notifikasi tidak terkirim ke Discord</td>
+          <td>Periksa <strong>System Parameters → <code>discord.webhook.url</code></strong>. Pastikan URL sudah diisi dan benar formatnya.</td>
+        </tr>
+        <tr>
+          <td>Mention tidak muncul di pesan Discord</td>
+          <td>Pastikan field <strong>Discord User ID</strong> sudah diisi di profil user (<em>Settings → Users → tab Discord</em>). Nilai harus berupa angka, aktifkan Developer Mode di Discord untuk mendapatkannya.</td>
+        </tr>
+        <tr>
+          <td>Modul tidak muncul di Apps</td>
+          <td>Aktifkan <strong>Developer Mode</strong> di Odoo, lalu jalankan <strong>Apps → Update Apps List</strong>. Pastikan path addons sudah ditambahkan ke <code>odoo.conf</code>.</td>
+        </tr>
+        <tr>
+          <td>Error <code>requests</code> not found</td>
+          <td>Jalankan <code>pip install requests</code> di environment Python yang digunakan Odoo. Di Odoo 19, library ini biasanya sudah tersedia secara bawaan.</td>
+        </tr>
+        <tr>
+          <td>Discord mengembalikan error 404</td>
+          <td>Webhook URL sudah tidak valid — kemungkinan sudah dihapus di Discord. Buat webhook baru dan update nilai di System Parameters.</td>
+        </tr>
+        <tr>
+          <td>Discord mengembalikan error 429 (Rate Limit)</td>
+          <td>Terlalu banyak notifikasi dikirim dalam waktu singkat. Discord membatasi 30 request/menit per webhook. Pertimbangkan untuk membatasi frekuensi assign task.</td>
+        </tr>
+        <tr>
+          <td>Log error di Odoo Server</td>
+          <td>Cek log Odoo di <code>/var/log/odoo/odoo.log</code>, cari baris dengan keyword <code>discord</code> untuk melihat detail error lengkap.</td>
+        </tr>
+      </tbody>
+    </table>
 
     <!-- TECH STACK -->
     <div class="section-title">
