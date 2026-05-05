@@ -30,6 +30,10 @@ Key Features:
         'data/ir_config_parameter.xml',
     ],
     'images': [
+        'static/description/odoo_discord_mention.gif',
+        'static/description/sc_discord_user_id.png',
+        'static/description/sc_webhook_config.png',
+        'static/description/sc_task_send_discord.png',
         'static/description/index.html',
     ],
     'installable': True,

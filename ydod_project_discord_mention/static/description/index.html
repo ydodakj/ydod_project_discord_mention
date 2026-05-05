@@ -243,6 +243,51 @@
     }
     .author-link:hover { background: rgba(255,255,255,0.35); }
 
+    /* ── SCREENSHOT GALLERY ── */
+    .gallery { margin-bottom: 2.5rem; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .gallery-item {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid #eee;
+      transition: var(--transition);
+    }
+    .gallery-item:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    .gallery-item img {
+      width: 100%; display: block;
+      border-bottom: 1px solid #eee;
+    }
+    .gallery-caption {
+      padding: 0.65rem 0.9rem;
+      font-size: 0.84rem; color: var(--text-light);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .gallery-caption i { color: var(--accent); font-size: 0.9rem; }
+
+    /* ── GIF DEMO ── */
+    .demo-box {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid #eee;
+      margin-bottom: 2.5rem;
+    }
+    .demo-box img { width: 100%; display: block; }
+    .demo-box .demo-caption {
+      padding: 0.75rem 1rem;
+      font-size: 0.87rem; color: var(--text-light);
+      border-top: 1px solid #eee;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .demo-box .demo-caption i { color: var(--accent); }
+
     /* ── SUPPORT / FOOTER BANNER ── */
     .support-banner {
       background: var(--white); border-radius: var(--radius);
@@ -360,6 +405,50 @@
         <div class="step-body">
           <h4>Selesai — Assign task dan lihat mention muncul di Discord!</h4>
           <p>Setiap kali field <code>user_ids</code> pada task diubah, webhook otomatis dipanggil.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- GIF DEMO -->
+    <div class="section-title">
+      <h2><i class="fas fa-play-circle"></i> Demo</h2>
+      <p>Lihat alur lengkap dari assign task hingga mention muncul di Discord</p>
+    </div>
+    <div class="demo-box">
+      <img src="odoo_discord_mention.gif" alt="Demo Project Discord Mention"/>
+      <div class="demo-caption">
+        <i class="fas fa-film"></i>
+        Assign task → webhook terpanggil otomatis → mention langsung di Discord channel
+      </div>
+    </div>
+
+    <!-- SCREENSHOT GALLERY -->
+    <div class="section-title">
+      <h2><i class="fas fa-images"></i> Screenshot</h2>
+      <p>Tampilan konfigurasi dan fitur di dalam Odoo</p>
+    </div>
+    <div class="gallery">
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="sc_discord_user_id.png" alt="Discord User ID pada profil user"/>
+          <div class="gallery-caption">
+            <i class="fas fa-id-card"></i>
+            Tab Discord pada halaman User — isi Discord User ID
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="sc_webhook_config.png" alt="Konfigurasi Webhook Discord di System Parameters"/>
+          <div class="gallery-caption">
+            <i class="fas fa-cog"></i>
+            System Parameters — simpan <code>discord.webhook.url</code>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <img src="sc_task_send_discord.png" alt="Tombol Kirim ke Discord pada task"/>
+          <div class="gallery-caption">
+            <i class="fas fa-paper-plane"></i>
+            Tombol "Kirim ke Discord" langsung dari form task
+          </div>
         </div>
       </div>
     </div>
