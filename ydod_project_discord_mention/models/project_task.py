@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 import requests
 
@@ -60,7 +60,8 @@ class ProjectTask(models.Model):
         return ' '.join(mentions) if mentions else '*(tidak ada Discord User ID terdaftar)*'
 
     def _now_str(self):
-        return datetime.now().strftime('%d %b %Y %H:%M:%S')
+        wib = timezone(timedelta(hours=7))
+        return datetime.now(tz=wib).strftime('%d %b %Y %H:%M:%S WIB')
 
     def _post_to_discord(self, webhook_url, content):
         try:
