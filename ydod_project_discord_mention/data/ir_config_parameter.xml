@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Default webhook URL — ganti nilainya di Settings > Technical > System Parameters -->
+    <record id="discord_webhook_url_param" model="ir.config_parameter">
+        <field name="key">discord.webhook.url</field>
+        <field name="value"></field>
+    </record>
+
+</odoo>

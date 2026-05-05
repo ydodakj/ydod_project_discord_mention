@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project Discord Mention — Odoo 19</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary:      #714B67;
+      --primary-dark: #5a3a52;
+      --accent:       #017E84;
+      --accent-dark:  #01656a;
+      --bg-light:     #F8F9FA;
+      --text-main:    #212529;
+      --text-light:   #6C757D;
+      --white:        #FFFFFF;
+      --radius:       12px;
+      --shadow:       0 4px 12px rgba(0,0,0,0.08);
+      --transition:   all 0.3s ease;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-main);
+      background: var(--bg-light);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; transition: var(--transition); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: var(--white);
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+    }
+    .hero-icon {
+      width: 72px; height: 72px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 18px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin-bottom: 1.2rem;
+      backdrop-filter: blur(6px);
+    }
+    .hero h1 {
+      font-size: 1.9rem; font-weight: 700; margin-bottom: 0.4rem; line-height: 1.25;
+    }
+    .hero .subtitle {
+      font-size: 1rem; opacity: 0.88; margin-bottom: 1.4rem;
+    }
+    .badge-row {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      justify-content: center; margin-bottom: 1.4rem;
+    }
+    .badge {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 50px; font-size: 0.82rem;
+      padding: 0.28rem 0.85rem;
+      backdrop-filter: blur(4px);
+    }
+    .badge i { margin-right: 0.3rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.65rem 1.4rem; border-radius: var(--radius);
+      font-weight: 600; font-size: 0.9rem; cursor: pointer;
+      transition: var(--transition); border: none;
+    }
+    .btn-accent { background: var(--accent); color: var(--white); }
+    .btn-accent:hover { background: var(--accent-dark); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.7);
+      color: var(--white);
+    }
+    .btn-outline:hover { background: var(--white); color: var(--primary); }
+
+    /* ── MAIN CONTENT ── */
+    .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    /* ── SECTION TITLES ── */
+    .section-title { margin-bottom: 1.5rem; }
+    .section-title h2 {
+      font-size: 1.35rem; color: var(--primary);
+      display: flex; align-items: center; gap: 0.5rem;
+      margin-bottom: 0.3rem;
+    }
+    .section-title p { color: var(--text-light); font-size: 0.92rem; }
+
+    /* ── FEATURE CARDS GRID ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+      gap: 1.1rem;
+      margin-bottom: 2.5rem;
+    }
+    .feature-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.3rem 1.2rem;
+      border: 1px solid #eee;
+      transition: var(--transition);
+    }
+    .feature-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    .feature-icon {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-size: 1.1rem;
+      margin-bottom: 0.9rem;
+    }
+    .feature-card h4 {
+      font-size: 0.97rem; font-weight: 600; color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+    .feature-card p { font-size: 0.87rem; color: var(--text-light); line-height: 1.55; }
+
+    /* ── HOW IT WORKS STEPS ── */
+    .steps { margin-bottom: 2.5rem; }
+    .step {
+      display: flex; gap: 1rem; align-items: flex-start;
+      background: var(--white); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 1.1rem 1.2rem;
+      margin-bottom: 0.85rem; border: 1px solid #eee;
+      transition: var(--transition);
+    }
+    .step:hover { box-shadow: 0 8px 18px rgba(0,0,0,0.1); }
+    .step-num {
+      min-width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-weight: 700; font-size: 0.9rem;
+    }
+    .step-body h4 { font-size: 0.97rem; font-weight: 600; margin-bottom: 0.2rem; }
+    .step-body p  { font-size: 0.87rem; color: var(--text-light); }
+
+    /* ── NOTIFICATION PREVIEW ── */
+    .preview-box {
+      background: #36393f;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 2.5rem;
+      border-left: 4px solid #5865F2;
+    }
+    .preview-header {
+      display: flex; align-items: center; gap: 0.7rem;
+      margin-bottom: 0.9rem;
+    }
+    .discord-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, #5865F2, #7289da);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 1rem;
+    }
+    .preview-header .bot-name { color: #fff; font-weight: 600; font-size: 0.92rem; }
+    .preview-header .bot-tag  {
+      background: #5865F2; color: #fff;
+      font-size: 0.7rem; padding: 0.1rem 0.4rem; border-radius: 4px;
+      font-weight: 600; margin-left: 0.3rem;
+    }
+    .preview-msg { color: #dcddde; font-size: 0.9rem; line-height: 1.7; }
+    .preview-msg strong { color: #fff; }
+    .discord-mention {
+      background: rgba(88,101,242,0.3); color: #7c94ff;
+      padding: 0 3px; border-radius: 3px; font-weight: 600;
+    }
+
+    /* ── CONFIG TABLE ── */
+    .config-section { margin-bottom: 2.5rem; }
+    .config-table {
+      width: 100%; border-collapse: collapse;
+      background: var(--white); border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden;
+    }
+    .config-table thead tr { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); }
+    .config-table thead th {
+      color: var(--white); padding: 0.8rem 1rem;
+      font-size: 0.88rem; text-align: left; font-weight: 600;
+    }
+    .config-table tbody tr { border-bottom: 1px solid #f0f0f0; }
+    .config-table tbody tr:last-child { border-bottom: none; }
+    .config-table tbody tr:hover { background: var(--bg-light); }
+    .config-table td {
+      padding: 0.75rem 1rem; font-size: 0.875rem; color: var(--text-main);
+      vertical-align: top;
+    }
+    .config-table td:first-child { color: var(--accent); font-weight: 600; font-family: monospace; font-size: 0.85rem; }
+
+    /* ── TAG CHIPS ── */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 2.5rem; }
+    .tag {
+      background: var(--bg-light); border: 1px solid #ddd;
+      border-radius: 50px; font-size: 0.82rem; color: var(--text-main);
+      padding: 0.28rem 0.75rem;
+    }
+    .tag i { color: var(--accent); margin-right: 0.25rem; }
+
+    /* ── TECH STACK CARD ── */
+    .tech-card {
+      background: var(--white); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 1.3rem 1.5rem;
+      margin-bottom: 2.5rem; border: 1px solid #eee;
+    }
+    .tech-row { display: flex; align-items: center; gap: 0.6rem; padding: 0.45rem 0; border-bottom: 1px solid #f5f5f5; }
+    .tech-row:last-child { border-bottom: none; }
+    .tech-label { color: var(--text-light); font-size: 0.85rem; min-width: 100px; }
+    .tech-value { font-size: 0.9rem; color: var(--text-main); font-weight: 500; }
+
+    /* ── AUTHOR CARD ── */
+    .author-card {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: var(--radius);
+      padding: 1.5rem 1.8rem;
+      color: var(--white);
+      display: flex; align-items: center; gap: 1.2rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .author-avatar {
+      width: 58px; height: 58px; border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; flex-shrink: 0;
+      border: 3px solid rgba(255,255,255,0.5);
+    }
+    .author-info h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .author-info p  { font-size: 0.87rem; opacity: 0.88; margin-bottom: 0.5rem; }
+    .author-links { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .author-link {
+      background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 50px; font-size: 0.8rem; padding: 0.25rem 0.75rem;
+      color: var(--white); display: flex; align-items: center; gap: 0.3rem;
+      transition: var(--transition);
+    }
+    .author-link:hover { background: rgba(255,255,255,0.35); }
+
+    /* ── SUPPORT / FOOTER BANNER ── */
+    .support-banner {
+      background: var(--white); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 1.3rem 1.5rem;
+      text-align: center; border: 1px solid #eee;
+      margin-bottom: 1rem;
+    }
+    .support-banner h3 { font-size: 1rem; color: var(--primary); margin-bottom: 0.4rem; }
+    .support-banner p { font-size: 0.87rem; color: var(--text-light); margin-bottom: 0.9rem; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.45rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .author-card { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-icon"><i class="fab fa-discord"></i></div>
+    <h1>Project Discord Mention</h1>
+    <p class="subtitle">
+      Auto-mention Discord user saat task di-assign — integrasi seamless Odoo 19 &times; Discord Webhook
+    </p>
+    <div class="badge-row">
+      <span class="badge"><i class="fas fa-code-branch"></i> Odoo 19.0</span>
+      <span class="badge"><i class="fas fa-users"></i> Multi-assign</span>
+      <span class="badge"><i class="fab fa-discord"></i> Discord Webhook</span>
+      <span class="badge"><i class="fas fa-shield-alt"></i> OPL-1</span>
+    </div>
+    <div style="display:flex;gap:0.7rem;justify-content:center;flex-wrap:wrap;">
+      <a href="https://profile.dodyakj.online" target="_blank" class="btn btn-accent">
+        <i class="fas fa-user-circle"></i> Developer Profile
+      </a>
+      <a href="https://www.odoo.com/apps/modules" target="_blank" class="btn btn-outline">
+        <i class="fas fa-store"></i> Odoo Apps Store
+      </a>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="container">
+
+    <!-- FITUR UTAMA -->
+    <div class="section-title">
+      <h2><i class="fas fa-star"></i> Fitur Utama</h2>
+      <p>Semua yang Anda butuhkan untuk menjaga tim tetap sinkron via Discord</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+        <h4>Notifikasi Otomatis</h4>
+        <p>Kirim pesan Discord secara otomatis setiap kali task di-assign ke user, tanpa konfigurasi manual.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-at"></i></div>
+        <h4>Direct Mention</h4>
+        <p>Mention langsung user Discord menggunakan ID numerik mereka sehingga notifikasi tidak terlewat.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-users"></i></div>
+        <h4>Multi-assign Support</h4>
+        <p>Dukung banyak assignee sekaligus — semua user yang di-assign di-mention dalam satu pesan.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-sliders-h"></i></div>
+        <h4>Konfigurasi Webhook Global</h4>
+        <p>Simpan webhook Discord di System Parameters Odoo, aman dan mudah diganti kapan saja.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+        <h4>Detail Task Lengkap</h4>
+        <p>Pesan Discord mencakup nama task, project, deadline, dan prioritas dalam format yang rapi.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-plug"></i></div>
+        <h4>Integrasi Native</h4>
+        <p>Override <code>project.task</code> secara native menggunakan ORM Odoo — tidak perlu cron job.</p>
+      </div>
+    </div>
+
+    <!-- CARA KERJA -->
+    <div class="section-title">
+      <h2><i class="fas fa-cogs"></i> Cara Kerja</h2>
+      <p>Tiga langkah konfigurasi, langsung aktif</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Buat Discord Webhook</h4>
+          <p>Di Discord: <strong>Edit Channel → Integrations → Webhooks → New Webhook</strong>. Copy URL-nya.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Simpan Webhook di Odoo</h4>
+          <p>Masuk ke <strong>Settings → Technical → System Parameters</strong>, tambah key <code>discord.webhook.url</code> dengan nilai webhook URL.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Isi Discord Username di Profil User</h4>
+          <p>Buka <strong>Settings → Users → pilih user → tab Discord</strong>, isi field <em>Discord Username</em> (contoh: <code>budisantoso</code> atau <code>budi#1234</code>).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num"><i class="fas fa-check"></i></div>
+        <div class="step-body">
+          <h4>Selesai — Assign task dan lihat mention muncul di Discord!</h4>
+          <p>Setiap kali field <code>user_ids</code> pada task diubah, webhook otomatis dipanggil.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREVIEW NOTIFIKASI -->
+    <div class="section-title">
+      <h2><i class="fab fa-discord"></i> Contoh Notifikasi Discord</h2>
+      <p>Tampilan pesan yang dikirim ke channel Discord Anda</p>
+    </div>
+
+    <div class="preview-box">
+      <div class="preview-header">
+        <div class="discord-avatar"><i class="fas fa-robot"></i></div>
+        <div>
+          <span class="bot-name">Odoo Webhook</span>
+          <span class="bot-tag">BOT</span>
+        </div>
+      </div>
+      <div class="preview-msg">
+        📋 <strong>Task Baru Assigned!</strong><br/><br/>
+        👤 Assigned to: <span class="discord-mention">@BudiSantoso</span> <span class="discord-mention">@AnisaRahayu</span><br/>
+        📝 Task: <strong>Implementasi Fitur Login SSO</strong><br/>
+        📁 Project: <strong>Website Revamp Q3</strong><br/>
+        📅 Deadline: <strong>25 Juli 2025</strong><br/>
+        ⚡ Prioritas: 🔴 Urgent<br/><br/>
+        🔗 Cek task di Odoo untuk detail lengkap.
+      </div>
+    </div>
+
+    <!-- KONFIGURASI -->
+    <div class="section-title">
+      <h2><i class="fas fa-key"></i> Parameter Konfigurasi</h2>
+      <p>System Parameters yang digunakan modul ini</p>
+    </div>
+
+    <div class="config-section">
+      <table class="config-table">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Keterangan</th>
+            <th>Contoh Nilai</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>discord.webhook.url</td>
+            <td>URL Webhook Discord channel tujuan notifikasi</td>
+            <td style="font-family:monospace;font-size:0.8rem;color:var(--text-light)">https://discord.com/api/webhooks/xxx/yyy</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FIELD USER -->
+    <div class="section-title">
+      <h2><i class="fas fa-id-badge"></i> Field Tambahan pada User</h2>
+      <p>Field yang ditambahkan ke model <code>res.users</code></p>
+    </div>
+
+    <div class="config-section">
+      <table class="config-table">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Tipe</th>
+            <th>Keterangan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>discord_username</td>
+            <td>Char</td>
+            <td>Username Discord user, contoh: <code>budisantoso</code> atau <code>budi#1234</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TECH STACK -->
+    <div class="section-title">
+      <h2><i class="fas fa-layer-group"></i> Spesifikasi Teknis</h2>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-row">
+        <span class="tech-label"><i class="fas fa-cube" style="color:var(--accent);margin-right:0.4rem"></i>Odoo</span>
+        <span class="tech-value">19.0</span>
+      </div>
+      <div class="tech-row">
+        <span class="tech-label"><i class="fab fa-python" style="color:var(--accent);margin-right:0.4rem"></i>Python</span>
+        <span class="tech-value">3.11+</span>
+      </div>
+      <div class="tech-row">
+        <span class="tech-label"><i class="fas fa-code" style="color:var(--accent);margin-right:0.4rem"></i>Depends</span>
+        <span class="tech-value">project, base</span>
+      </div>
+      <div class="tech-row">
+        <span class="tech-label"><i class="fas fa-box" style="color:var(--accent);margin-right:0.4rem"></i>Library</span>
+        <span class="tech-value">requests (built-in di Odoo 19)</span>
+      </div>
+      <div class="tech-row">
+        <span class="tech-label"><i class="fas fa-balance-scale" style="color:var(--accent);margin-right:0.4rem"></i>Lisensi</span>
+        <span class="tech-value">LGPL-3</span>
+      </div>
+    </div>
+
+    <!-- TAGS -->
+    <div class="section-title">
+      <h2><i class="fas fa-tags"></i> Kategori</h2>
+    </div>
+    <div class="tag-row">
+      <span class="tag"><i class="fas fa-project-diagram"></i> Project Management</span>
+      <span class="tag"><i class="fab fa-discord"></i> Discord Integration</span>
+      <span class="tag"><i class="fas fa-bell"></i> Notification</span>
+      <span class="tag"><i class="fas fa-users"></i> Team Collaboration</span>
+      <span class="tag"><i class="fas fa-robot"></i> Automation</span>
+      <span class="tag"><i class="fas fa-webhook"></i> Webhook</span>
+      <span class="tag"><i class="fas fa-tasks"></i> Task Management</span>
+    </div>
+
+    <!-- AUTHOR -->
+    <div class="section-title">
+      <h2><i class="fas fa-user-circle"></i> Developer</h2>
+    </div>
+
+    <div class="author-card">
+      <div class="author-avatar"><i class="fas fa-user"></i></div>
+      <div class="author-info">
+        <h4>Dody Ahmad Kusuma Jaya</h4>
+        <p>Odoo ERP Specialist — Technical &amp; Functional &nbsp;|&nbsp; 8+ tahun pengalaman &nbsp;|&nbsp; 20+ proyek</p>
+        <div class="author-links">
+          <a href="https://profile.dodyakj.online" target="_blank" class="author-link">
+            <i class="fas fa-globe"></i> profile.dodyakj.online
+          </a>
+          <a href="https://github.com/dodyakj" target="_blank" class="author-link">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+          <a href="https://www.odoo.com/odoo/apps/modules/browse?search=dody+ahmad" target="_blank" class="author-link">
+            <i class="fas fa-store"></i> Odoo Apps
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUPPORT -->
+    <div class="support-banner">
+      <h3><i class="fas fa-headset" style="color:var(--accent);margin-right:0.4rem"></i>Butuh Bantuan?</h3>
+      <p>Dokumentasi lengkap, bug report, dan customization request tersedia. Respon &le;24 jam pada hari kerja.</p>
+      <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">
+        <a href="https://profile.dodyakj.online#contact" target="_blank" class="btn btn-accent">
+          <i class="fas fa-envelope"></i> Hubungi Developer
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+
+</body>
+</html>

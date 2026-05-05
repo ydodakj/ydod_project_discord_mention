@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_task_form_discord_button" model="ir.ui.view">
+        <field name="name">project.task.form.discord.button</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_send_discord"
+                        type="object"
+                        string="Kirim ke Discord"
+                        icon="fa-paper-plane"
+                        class="oe_stat_button"
+                        title="Kirim notifikasi Discord manual untuk task ini"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
